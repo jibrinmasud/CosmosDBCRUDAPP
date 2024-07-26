@@ -1,0 +1,6 @@
+@ComosCrud_HostAddress = http://localhost:5211
+
+GET {{ComosCrud_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
