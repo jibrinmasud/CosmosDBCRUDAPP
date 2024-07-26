@@ -25,17 +25,30 @@ namespace ComosCrud.Services
 
         public async Task<Driver> CreateDriverAsync(Driver driver)
         {
-
+            var response = await _container.CreateItemAsync(driver, new PartitionKey(driver.Team));
+            return response.Resource;
         }
 
-        public async Task<Driver> DeleteDriverAsync(string id, string team)
+        public async Task<bool> DeleteDriver(string id, string team)
         {
-            throw new NotImplementedException();
+            var response = await _container.DeleteItemAsync<Driver>(id, new PartitionKey(team));
+            if (response.Resource != null)
+                return true;
+            return false;
         }
 
         public async Task<Driver> GetDriverAsync(string id, string team)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var response = await _container.ReadItemAsync<Driver>(id, new PartitionKey(team));
+                return response;
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         public async Task<IEnumerable<Driver>> GetDriversAsync()
@@ -53,7 +66,8 @@ namespace ComosCrud.Services
 
         public async Task<Driver> UpdateDriveAsync(string id, Driver driver)
         {
-            throw new NotImplementedException();
+            var response = await _container.UpsertItemAsync(driver, new PartitionKey(driver.Team));
+            return response.Resource;
         }
     }
 }

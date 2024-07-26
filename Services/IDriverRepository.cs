@@ -12,6 +12,6 @@ namespace ComosCrud.Services
         Task<Driver> GetDriverAsync(string id, string team);
         Task<Driver> CreateDriverAsync(Driver driver);
         Task<Driver> UpdateDriveAsync(string id, Driver driver);
-        Task<Driver> DeleteDriverAsync(string id, string team);
+        Task<bool> DeleteDriver(string id, string team);
     }
 }
